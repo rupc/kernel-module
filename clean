@@ -1,0 +1,1 @@
+sudo find . -regex ".*\.\(mod\|mod\.c\|ko\|order\|symvers\|o\)" -exec rm {} \;
