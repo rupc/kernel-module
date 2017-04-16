@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/test/kernel-module/clone/clone.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/test/kernel-module/clone/clone.ko /home/jyr/work/test/kernel-module/clone/clone.o /home/jyr/work/test/kernel-module/clone/clone.mod.o

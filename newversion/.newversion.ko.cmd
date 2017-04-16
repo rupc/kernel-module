@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/test/kernel-module/newversion/newversion.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/test/kernel-module/newversion/newversion.ko /home/jyr/work/test/kernel-module/newversion/newversion.o /home/jyr/work/test/kernel-module/newversion/newversion.mod.o ;  true

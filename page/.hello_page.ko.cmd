@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/test/kernel-module/page/hello_page.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/test/kernel-module/page/hello_page.ko /home/jyr/work/test/kernel-module/page/hello_page.o /home/jyr/work/test/kernel-module/page/hello_page.mod.o

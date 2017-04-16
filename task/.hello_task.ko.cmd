@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/test/kernel-module/task/hello_task.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/test/kernel-module/task/hello_task.ko /home/jyr/work/test/kernel-module/task/hello_task.o /home/jyr/work/test/kernel-module/task/hello_task.mod.o

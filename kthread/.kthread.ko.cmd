@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/proj/kernel-module/kthread/kthread.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/proj/kernel-module/kthread/kthread.ko /home/jyr/work/proj/kernel-module/kthread/kthread.o /home/jyr/work/proj/kernel-module/kthread/kthread.mod.o

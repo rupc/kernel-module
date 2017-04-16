@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/proj/kernel-module/workqueue/hello_workqueue.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/proj/kernel-module/workqueue/hello_workqueue.ko /home/jyr/work/proj/kernel-module/workqueue/hello_workqueue.o /home/jyr/work/proj/kernel-module/workqueue/hello_workqueue.mod.o

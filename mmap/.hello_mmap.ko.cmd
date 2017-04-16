@@ -1,1 +1,0 @@
-cmd_/home/jyr/work/test/kernel-module/mmap/hello_mmap.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/jyr/work/test/kernel-module/mmap/hello_mmap.ko /home/jyr/work/test/kernel-module/mmap/hello_mmap.o /home/jyr/work/test/kernel-module/mmap/hello_mmap.mod.o
