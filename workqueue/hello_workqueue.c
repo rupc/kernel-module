@@ -2,6 +2,7 @@
 #include <linux/module.h>
 #include <linux/workqueue.h>
 #include <linux/types.h>
+#include <linux/flexsc.h>
 
 #define printd() \
     printk(KERN_ALERT "workqueue_test: %s %d\n", __FUNCTION__, __LINE__); 
@@ -17,12 +18,12 @@ extern void destory_workqueue(struct workqueue_struct *wq);
 
 static void flexsc_work2_handler(struct work_struct *work)
 {
-    printk("dinka - closer!\n");
+    /* printk("dinka - closer!\n"); */
 }
 
 static void flexsc_work1_handler(struct work_struct *work)
 {
-    printk("my heart is go on!\n");
+    /* printk("my heart is go on!\n"); */
 }
 static void basic_workqueue(void)
 {
@@ -58,8 +59,23 @@ static void basic_workqueue(void)
 */
 
 static int cnt = 0;
+
+struct flexsc_sysentry {
+    long args[6];
+    unsigned nargs;
+    unsigned short rstatus;
+    unsigned short sysnum;
+    unsigned sysret;
+} ____cacheline_aligned_in_smp;
+
 void syswork_thread(struct work_struct *work)
 {
+    struct flexsc_sysentry *entry = work->work_entry;
+
+    printk("%ld %ld %ld %ld\n",
+            entry->sysnum, entry->rstatus,
+            entry->sysret, entry->nargs);
+
     /* printk("work's data: %d\n", (int64_t)(work->data)); */
     if (cnt % 100 == 0) {
         printk("%d\n", cnt++);
@@ -70,6 +86,7 @@ void syswork_thread(struct work_struct *work)
 
 struct workqueue_struct *cwqueue;
 
+
 void modern_wq(void)
 {
     unsigned long num = 5;
@@ -79,23 +96,34 @@ void modern_wq(void)
 
     #define MAX_WORK 100000
     #define MAX_WORKER 1 
+
     static struct work_struct sys_work[MAX_WORK];
+    static struct flexsc_sysentry entry;
+
+    entry.sysnum = 30;
+    entry.rstatus = 80;
+    entry.sysret = 10;
+    entry.nargs = 20;
 
     cwqueue = alloc_workqueue("hello_queue", WQ_MEM_RECLAIM, MAX_WORKER);
+    
+    FLEXSC_INIT_WORK(&sys_work[0], syswork_thread, &entry);
+    queue_work_on(0, cwqueue, &sys_work[i]);
 
-    for (i = 0; i < MAX_WORK; i++) {
+    /* for (i = 0; i < MAX_WORK; i++) {
         INIT_WORK(&sys_work[i], syswork_thread);
-        /* sys_work[i].data = ,cc; */
+        FLEXSC_INIT_WORK(&sys_work[i], syswork_thread, entyr)
+        [>sys_work[i].data = ,cc;<]
 
-        /* set_work_data(&sys_work[i], pnum++, 0); */
+        [>set_work_data(&sys_work[i], pnum++, 0);<]
 
-        /* queue_work_on(5, cwqueue, &sys_work[i]); */
+        [>queue_work_on(5, cwqueue, &sys_work[i]);<]
     }
     for (i = 0; i < MAX_WORK; i++) {
-        /* queue_work(cwqueue, &sys_work[i]); */
+        [>queue_work(cwqueue, &sys_work[i]);<]
         queue_work_on(0, cwqueue, &sys_work[i]);
     }
-
+ */
 }
 
 
