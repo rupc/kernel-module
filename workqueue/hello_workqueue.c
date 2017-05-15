@@ -3,6 +3,7 @@
 #include <linux/workqueue.h>
 #include <linux/types.h>
 #include <linux/flexsc.h>
+#include <linux/syscalls.h>
 
 #define printd() \
     printk(KERN_ALERT "workqueue_test: %s %d\n", __FUNCTION__, __LINE__); 
@@ -18,12 +19,12 @@ extern void destory_workqueue(struct workqueue_struct *wq);
 
 static void flexsc_work2_handler(struct work_struct *work)
 {
-    /* printk("dinka - closer!\n"); */
+    printk("in work handler 2 \n");
 }
 
 static void flexsc_work1_handler(struct work_struct *work)
 {
-    /* printk("my heart is go on!\n"); */
+    printk("in work handler 1 \n");
 }
 static void basic_workqueue(void)
 {
@@ -68,13 +69,22 @@ struct flexsc_sysentry {
     unsigned sysret;
 } ____cacheline_aligned_in_smp;
 
+void print_sysentry(struct flexsc_sysentry *entry)
+{
+    printk("%5d %5d %5d %5d: %9lu %19lu %9lu %9lu %9lu %9lu\n",
+            entry->sysnum, entry->nargs,
+            entry->rstatus, entry->sysret,
+            entry->args[0], entry->args[1],
+            entry->args[2], entry->args[3],
+            entry->args[4], entry->args[5]);
+}
+
+/* struct flexsc_sysentry */
 void syswork_thread(struct work_struct *work)
 {
     struct flexsc_sysentry *entry = work->work_entry;
 
-    printk("%ld %ld %ld %ld\n",
-            entry->sysnum, entry->rstatus,
-            entry->sysret, entry->nargs);
+    print_sysentry(entry);
 
     /* printk("work's data: %d\n", (int64_t)(work->data)); */
     if (cnt % 100 == 0) {
