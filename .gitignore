@@ -4,3 +4,5 @@
 *.symvers
 *.order
 *.cmd
+*.mod
+*/.tmp_versions
